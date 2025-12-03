@@ -1,5 +1,7 @@
-export const POST = async (request: Request) => {
+import type { NextRequest } from "next/server";
+
+export const POST = async (request: NextRequest) => {
     const data = await request.json()
     console.log(data)
-    return new Response('Email Hook POST endpoint is working');
+    return Response.json({ message: "Data received successfully" });
 }
