@@ -1,7 +1,6 @@
-import type { NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest) => {
-    const data = await request.json()
-    console.log(data)
-    return Response.json({ message: "Data received successfully" });
+    console.log(await request.text())
+    return NextResponse.json({ message: "Data received successfully" });
 }
