@@ -63,6 +63,7 @@ export async function parseDocument(
   formData.append("ocr", "auto");
   formData.append("chart_recognition", "true");
   formData.append("coordinates", "true");
+  formData.append("output_formats", JSON.stringify(["html", "markdown"]));
   formData.append("base64_encoding", JSON.stringify(["figure"]));
 
   const response = await fetch(
