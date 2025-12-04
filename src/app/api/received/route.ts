@@ -57,7 +57,7 @@ export const POST = async (request: NextRequest) => {
 
                 // get the file's contents
                 const buffer = Buffer.from(await response.arrayBuffer());
-                const res = await parseDocument(new Blob([buffer]))
+                const res = await parseDocument(new Blob([buffer]), { apiKey: "up_Y4sxIMWwlHx0WUyFRShbwcXEzxhVB" })
                 console.info(res)
                 // process the content (e.g., save to storage, analyze, etc.)
             }
