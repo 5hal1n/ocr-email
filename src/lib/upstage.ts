@@ -6,21 +6,21 @@ export type UpstageContent = {
 
 export type UpstageElement = {
   category:
-    | "heading1"
-    | "heading2"
-    | "heading3"
-    | "paragraph"
-    | "table"
-    | "figure"
-    | "chart"
-    | "equation"
-    | "list"
-    | "caption"
-    | "header"
-    | "footer"
-    | "page_number"
-    | "footnote"
-    | string;
+  | "heading1"
+  | "heading2"
+  | "heading3"
+  | "paragraph"
+  | "table"
+  | "figure"
+  | "chart"
+  | "equation"
+  | "list"
+  | "caption"
+  | "header"
+  | "footer"
+  | "page_number"
+  | "footnote"
+  | string;
   content: UpstageContent;
   coordinates: Array<[number, number]>;
   id: number;
@@ -49,8 +49,6 @@ export async function parseDocument(
   file: File | Blob,
   options: {
     apiKey?: string;
-    ocr?: "auto" | "force";
-    model?: string;
   } = {},
 ): Promise<UpstageResponse> {
   const apiKey = options.apiKey || process.env.UPSTAGE_API_KEY;
@@ -61,14 +59,11 @@ export async function parseDocument(
 
   const formData = new FormData();
   formData.append("document", file);
-
-  if (options.ocr) {
-    formData.append("ocr", options.ocr);
-  }
-
-  if (options.model) {
-    formData.append("model", options.model);
-  }
+  formData.append("model", "document-parse-250618");
+  formData.append("ocr", "auto");
+  formData.append("chart_recognition", "true");
+  formData.append("coordinates", "true");
+  formData.append("base64_encoding", JSON.stringify(["figure"]));
 
   const response = await fetch(
     "https://api.upstage.ai/v1/document-digitization",
