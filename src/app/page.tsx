@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { UploadForm } from "@/components/UploadForm";
 
 export default function Home() {
   return (
@@ -22,8 +21,6 @@ export default function Home() {
             results to your database.
           </p>
         </div>
-
-        <UploadForm />
       </main>
     </div>
   );
