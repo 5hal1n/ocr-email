@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { zodResponseFormat, zodTextFormat } from "openai/helpers/zod";
+import { zodResponseFormat } from "openai/helpers/zod";
 import { z } from "zod";
 
 const ReceiptExtraction = z.object({

@@ -74,16 +74,18 @@ export const POST = async (request: NextRequest) => {
         console.info("2. completed chat response:", chatResponse);
         const supabase = await createClient();
         const { data, error } = await supabase
-          .from("ocr_documents")
+          .from("receipts")
           .insert({
             merchant_name: chatResponse?.merchant_name || "不明",
             total_amount: chatResponse?.total_amount || -1,
             image_url: attachment.download_url,
           })
           .select();
-        console.info("3. completed supabase insert:", data);
+
         if (error) {
           console.error("Supabase insert error:", error);
+        } else {
+          console.info("3. completed supabase insert:", data);
         }
       }
     }
