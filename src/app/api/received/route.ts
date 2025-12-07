@@ -50,7 +50,6 @@ export const POST = async (request: NextRequest) => {
       });
     if (attachments !== null) {
       for (const attachment of attachments.data) {
-        // use the download_url to download attachments however you want
         const response = await fetch(attachment.download_url);
         if (!response.ok) {
           console.error(`Failed to download ${attachment.filename}`);
@@ -61,6 +60,7 @@ export const POST = async (request: NextRequest) => {
         const ocrResult = await parseDocument(new Blob([buffer]), {
           apiKey: "up_Y4sxIMWwlHx0WUyFRShbwcXEzxhVB",
         });
+        console.info("1. completed ocr parsing:", ocrResult);
         const prompt = `
         以下のOCR結果から領収書の内容を抽出してください。
         抽出する内容は以下の通りです：
@@ -71,14 +71,17 @@ export const POST = async (request: NextRequest) => {
         ${ocrResult.content.markdown}
         `
         const chatResponse = await generateChatResponse(prompt);
+        console.info("2. completed chat response:", chatResponse);
         const supabase = await createClient();
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from("ocr_documents")
           .insert({
             merchant_name: chatResponse?.merchant_name || "不明",
             total_amount: chatResponse?.total_amount || -1,
             image_url: attachment.download_url,
-          });
+          })
+          .select();
+        console.info("3. completed supabase insert:", data);
         if (error) {
           console.error("Supabase insert error:", error);
         }
