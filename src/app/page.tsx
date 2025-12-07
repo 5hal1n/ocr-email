@@ -6,7 +6,11 @@ const Home = () => {
     <main className="p-4">
       <h1 className="text-2xl font-bold mb-4">領収書一覧</h1>
       <p className="mb-4">
-        領収書は{"<会社ID>@uldaebeloo.resend.app"}に送信してください
+        領収書は
+        <a href="mailto:banso@uldaebeloo.resend.app">
+          banso@uldaebeloo.resend.app
+        </a>
+        に送信してください
       </p>
       <div className="mb-4 outline">
         <ReceiptDataTable />
