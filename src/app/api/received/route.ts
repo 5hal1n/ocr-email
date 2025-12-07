@@ -1,8 +1,8 @@
+import { type NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
 import { createClient } from "@/lib/supabase/server";
 import { generateChatResponse } from "@/lib/upstage/chat";
 import { parseDocument } from "@/lib/upstage/documentParse";
-import { type NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 
 /**
  * 添付ファイルの定義
@@ -69,7 +69,7 @@ export const POST = async (request: NextRequest) => {
 
         OCR結果：
         ${ocrResult.content.markdown}
-        `
+        `;
         const chatResponse = await generateChatResponse(prompt);
         console.info("2. completed chat response:", chatResponse);
         const supabase = await createClient();
