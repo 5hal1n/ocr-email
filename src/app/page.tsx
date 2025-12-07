@@ -1,11 +1,24 @@
+import { Button } from "@/components/ui/button";
 import { ReceiptDataTable } from "@/components/usecase/receiptDataTable";
 
-export default function Home() {
+const Home = () => {
   return (
-    <main>
-      <h1>領収書一覧</h1>
-      <p>領収書は{"<会社ID>@uldaebeloo.resend.app"}に送信してください</p>
-      <ReceiptDataTable />
+    <main className="p-4">
+      <h1 className="text-2xl font-bold mb-4">領収書一覧</h1>
+      <p className="mb-4">
+        領収書は{"<会社ID>@uldaebeloo.resend.app"}に送信してください
+      </p>
+      <div className="mb-4 outline">
+        <ReceiptDataTable />
+      </div>
+      <div className="flex justify-end">
+        <Button variant="default" className="mr-2">
+          SaaSインポート
+        </Button>
+        <Button variant="outline">CSV出力</Button>
+      </div>
     </main>
   );
-}
+};
+
+export default Home;
