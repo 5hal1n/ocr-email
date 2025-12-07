@@ -6,21 +6,21 @@ export type UpstageContent = {
 
 export type UpstageElement = {
   category:
-  | "heading1"
-  | "heading2"
-  | "heading3"
-  | "paragraph"
-  | "table"
-  | "figure"
-  | "chart"
-  | "equation"
-  | "list"
-  | "caption"
-  | "header"
-  | "footer"
-  | "page_number"
-  | "footnote"
-  | string;
+    | "heading1"
+    | "heading2"
+    | "heading3"
+    | "paragraph"
+    | "table"
+    | "figure"
+    | "chart"
+    | "equation"
+    | "list"
+    | "caption"
+    | "header"
+    | "footer"
+    | "page_number"
+    | "footnote"
+    | string;
   content: UpstageContent;
   coordinates: Array<[number, number]>;
   id: number;
