@@ -6,6 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -15,16 +16,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { createClient } from "@/lib/supabase/client";
+import { db } from "@/lib/firebase/client";
+import type { ReceiptDisplay } from "@/types/receipt";
 
-type Receipt = {
-  id: string;
-  total_amount: number;
-  merchant_name: string;
-  created_at: string;
-};
-
-const columns: ColumnDef<Receipt>[] = [
+const columns: ColumnDef<ReceiptDisplay>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -62,15 +57,27 @@ const columns: ColumnDef<Receipt>[] = [
 ];
 
 export const ReceiptDataTable = () => {
-  const [data, setData] = useState<Receipt[]>([]);
+  const [data, setData] = useState<ReceiptDisplay[]>([]);
 
   const getData = useCallback(async () => {
-    const supabase = createClient();
-    const { data } = await supabase
-      .from("receipts")
-      .select("*")
-      .overrideTypes<Receipt[]>();
-    setData(data || []);
+    try {
+      const receiptsRef = collection(db, "receipts");
+      const q = query(receiptsRef, orderBy("created_at", "desc"));
+      const querySnapshot = await getDocs(q);
+
+      const receipts: ReceiptDisplay[] = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        merchant_name: doc.data().merchant_name,
+        total_amount: doc.data().total_amount,
+        image_url: doc.data().image_url,
+        created_at: doc.data().created_at.toDate().toISOString(),
+      }));
+
+      setData(receipts);
+    } catch (error) {
+      console.error("Firestore query error:", error);
+      setData([]);
+    }
   }, []);
 
   useEffect(() => {
