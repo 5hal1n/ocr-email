@@ -76,13 +76,20 @@ Before deploying, update `.firebaserc` with your Firebase project ID.
 
 ## Git Workflow
 
-### Branch Management
+Follow this workflow for ALL code changes:
+
+### 1. Create a Branch
 
 - **ALWAYS create a new branch** before starting any work
 - Use descriptive branch names (e.g., `feat/add-receipt-filter`, `fix/ocr-parsing`)
 - Never commit directly to `master`
 
-### Commit Guidelines
+### 2. Work on the Task
+
+- Make your changes
+- Test thoroughly
+
+### 3. Commit Changes
 
 - **ALWAYS commit your changes** when work is complete
 - Follow **Conventional Commits** specification: https://www.conventionalcommits.org/
@@ -105,6 +112,12 @@ docs(readme): update installation instructions
 refactor(firebase): extract storage logic to separate file
 chore(deps): update next to v16.0.8
 ```
+
+### 4. Merge Branch
+
+- **ALWAYS merge your branch back to master** after committing
+- Use `git checkout master && git merge <branch-name>`
+- Delete the feature branch after merging: `git branch -d <branch-name>`
 
 ## Architecture
 
